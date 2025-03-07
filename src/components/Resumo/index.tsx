@@ -5,7 +5,10 @@ import img_meta from '../../assets/img_meta.png'
 import img_meta_atingida from '../../assets/img_meta_atingida.png'
 import img_potencial_melhoria from '../../assets/img_potencial_melhoria.png'
 
-export const Resumo = () => {
+export const Resumo = ({
+  qtdVeiculos,
+  km,
+}: { qtdVeiculos: string; km: string }) => {
   return (
     <>
       {/* Para telas maiores 6 colunas de itens */}
@@ -16,7 +19,7 @@ export const Resumo = () => {
               Quantidade de Veiculos
             </span>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-start">
-              360
+              {qtdVeiculos}
             </h1>
           </div>
           <div>
@@ -32,7 +35,7 @@ export const Resumo = () => {
           <div>
             <span className="text-start inline-block">KMs Rodado</span>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-start">
-              360
+              {km}
             </h1>
           </div>
 

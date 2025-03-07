@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 export const api = axios.create({
-  baseURL: 'https://middleware.cloudcom.com.br',
+  // baseURL: 'https://middleware.cloudcom.com.br',
+  baseURL: 'http://teleconsult.com.br:3000',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -33,10 +34,8 @@ api.interceptors.request.use((config) => {
   if (localUserData) {
     const authData = JSON.parse(localUserData)
 
-    console.log({ authData })
-
-    config.headers.Authorization = authData.token
-      ? `Bearer ${authData.token}`
+    config.headers.Authorization = authData.access_token
+      ? `Bearer ${authData.access_token}`
       : ''
   }
 
