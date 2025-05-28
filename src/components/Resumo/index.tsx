@@ -8,7 +8,18 @@ import img_potencial_melhoria from '../../assets/img_potencial_melhoria.png'
 export const Resumo = ({
   qtdVeiculos,
   km,
-}: { qtdVeiculos: string; km: string }) => {
+  ltsConsumidos,
+  meta,
+  media,
+  potencialMelhoria,
+}: {
+  qtdVeiculos: string
+  km: string
+  ltsConsumidos: string
+  meta: string
+  media: string
+  potencialMelhoria: string
+}) => {
   return (
     <>
       {/* Para telas maiores 6 colunas de itens */}
@@ -52,7 +63,7 @@ export const Resumo = ({
           <div>
             <span className="text-start inline-block">Litros Consumidos</span>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-start">
-              360
+              {ltsConsumidos}
             </h1>
           </div>
           <div>
@@ -68,7 +79,7 @@ export const Resumo = ({
           <div>
             <span className="text-start inline-block">Meta</span>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-start">
-              360
+              {meta}
             </h1>
           </div>
 
@@ -85,7 +96,7 @@ export const Resumo = ({
           <div>
             <span className="text-start inline-block">Média Atindida</span>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-start">
-              360
+              {media}
             </h1>
           </div>
 
@@ -104,7 +115,7 @@ export const Resumo = ({
               Potencial de Melhoria
             </span>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-start">
-              360
+              {potencialMelhoria}
             </h1>
           </div>
 

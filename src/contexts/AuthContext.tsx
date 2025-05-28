@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { Menu } from '../components/Menu'
 import { api } from '../service/api'
+import { useGlobalContext } from './GlobalContext'
 
 type ILogin = {
   username: string
@@ -28,6 +29,7 @@ interface IAppAuthProviderProps {
 export const AppAuthProvider: React.FC<IAppAuthProviderProps> = ({
   children,
 }) => {
+  const { globalDispatch } = useGlobalContext()
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
@@ -60,10 +62,14 @@ export const AppAuthProvider: React.FC<IAppAuthProviderProps> = ({
       setLoading(true)
 
       try {
-        const { data } = await api.post('/auth/sign_in', {
-          email: username,
+        const { data } = await api.post('/auth', {
+          user: username,
           password: password,
-          sso_auth_token: '',
+        })
+
+        globalDispatch({
+          type: 'SET_DATA',
+          payload: { authUser: data },
         })
 
         localStorage.setItem(
@@ -85,7 +91,7 @@ export const AppAuthProvider: React.FC<IAppAuthProviderProps> = ({
         setLoading(false)
       }
     },
-    [navigate],
+    [navigate, globalDispatch],
   )
 
   const logout = useCallback(() => {

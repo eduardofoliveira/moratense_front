@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import Chart from 'react-apexcharts'
 
-export const EventosConsumo = () => {
+export const EventosConsumo = (props: any) => {
+  const { resumoConsumo } = props
+
   const [options] = useState({
     // fill: {
     //   colors: ['#F44336', '#E91E63', '#9C27B0'],
@@ -30,7 +32,20 @@ export const EventosConsumo = () => {
         // dataLabels: {
         //   position: false,
         // },
+        dataLabels: {
+          position: 'top', // top, center, bottom
+        },
       },
+    },
+    dataLabels: {
+      enabled: true,
+      formatter: (val: any) => `${val}`,
+      offsetY: -20,
+      style: {
+        fontSize: '12px',
+        colors: ['#000'],
+      },
+      position: 'top',
     },
     // dataLabels: {
     //   enabled: false,
@@ -45,17 +60,24 @@ export const EventosConsumo = () => {
         show: false,
       },
     },
+    yaxis: {
+      labels: {
+        show: false,
+        formatter: (val: any) => `${val}%`,
+      },
+    },
     xaxis: {
-      categories: [
-        '(RT) Aceleração Brusca',
-        '(RT) Banguela',
-        '(RT) Excesso de Rotação',
-        '(RT) Excesso de Velocidade',
-        '(RT) Fora da Faixa Verde',
-        '(RT) Inércia',
-        '(RT) Marcha Lenta Excessiva',
-        '(RT) Uso indevido pedal acelerador 85%',
-      ],
+      categories: resumoConsumo.map((item: any) => item.nome),
+
+      //   '(RT) Aceleração Brusca',
+      //   '(RT) Banguela',
+      //   '(RT) Excesso de Rotação',
+      //   '(RT) Excesso de Velocidade',
+      //   '(RT) Fora da Faixa Verde',
+      //   '(RT) Inércia',
+      //   '(RT) Marcha Lenta Excessiva',
+      //   '(RT) Uso indevido pedal acelerador 85%',
+      // ],
     },
     legend: {
       show: false,
@@ -67,7 +89,7 @@ export const EventosConsumo = () => {
   const [series] = useState([
     {
       name: 'Quantidade',
-      data: [30, 40, 45, 50, 49, 60, 70, 91],
+      data: resumoConsumo.map((item: any) => item.quantidade),
     },
   ])
 
