@@ -1,55 +1,57 @@
 import { useEffect, useCallback } from 'react'
 import {
-  Dropdown,
-  CustomFlowbiteTheme,
-  Flowbite,
-  Checkbox,
-  Label,
+  // Dropdown,
+  // CustomFlowbiteTheme,
+  // Flowbite,
+  // Checkbox,
+  // Label,
   Button,
 } from 'flowbite-react'
+
+import SearchableSelect from '../../components/SearchableSelect'
 import { useGlobalContext } from '../../contexts/GlobalContext'
 import { api } from '../../service/api'
 
-const theme: CustomFlowbiteTheme = {
-  button: {
-    color: {
-      cyan: 'text-gray-700 bg-white',
-    },
-  },
-  dropdown: {
-    arrowIcon: 'ml-2 h-4 w-4',
-    content: 'py-1 focus:outline-none',
-    floating: {
-      animation: 'transition-opacity',
-      arrow: {
-        base: 'absolute z-10 h-2 w-2 rotate-45',
-        style: {
-          dark: 'bg-red-900 dark:bg-red-700',
-          light: 'bg-white',
-          auto: 'bg-white dark:bg-red-700',
-        },
-        placement: '-4px',
-      },
-      base: 'z-10 w-fit divide-y divide-gray-100 rounded shadow focus:outline-none',
-      content: 'py-1 text-sm text-gray-700 dark:text-gray-200',
-      divider: 'my-1 h-px bg-red-100 dark:bg-red-600',
-      header: 'block px-4 py-2 text-sm text-gray-700 dark:text-gray-200',
-      hidden: 'invisible opacity-0',
-      item: {
-        container: '',
-        base: 'flex w-full cursor-pointer items-center justify-start px-4 py-2 text-sm text-gray-700 hover:bg-red-100 focus:bg-red-100 focus:outline-none dark:text-gray-200 dark:hover:bg-red-600 dark:hover:text-white dark:focus:bg-red-600 dark:focus:text-white',
-        icon: 'mr-2 h-4 w-4',
-      },
-      style: {
-        dark: 'bg-red-900 text-white dark:bg-red-700',
-        light: 'border border-gray-200 bg-white text-gray-900',
-        auto: 'border border-gray-200 bg-white text-gray-900 dark:border-none dark:bg-red-700 dark:text-white',
-      },
-      target: 'w-full',
-    },
-    inlineWrapper: 'flex items-center',
-  },
-}
+// const theme: CustomFlowbiteTheme = {
+//   button: {
+//     color: {
+//       cyan: 'text-gray-700 bg-white',
+//     },
+//   },
+//   dropdown: {
+//     arrowIcon: 'ml-2 h-4 w-4',
+//     content: 'py-1 focus:outline-none',
+//     floating: {
+//       animation: 'transition-opacity',
+//       arrow: {
+//         base: 'absolute z-10 h-2 w-2 rotate-45',
+//         style: {
+//           dark: 'bg-red-900 dark:bg-red-700',
+//           light: 'bg-white',
+//           auto: 'bg-white dark:bg-red-700',
+//         },
+//         placement: '-4px',
+//       },
+//       base: 'z-10 w-fit divide-y divide-gray-100 rounded shadow focus:outline-none',
+//       content: 'py-1 text-sm text-gray-700 dark:text-gray-200',
+//       divider: 'my-1 h-px bg-red-100 dark:bg-red-600',
+//       header: 'block px-4 py-2 text-sm text-gray-700 dark:text-gray-200',
+//       hidden: 'invisible opacity-0',
+//       item: {
+//         container: '',
+//         base: 'flex w-full cursor-pointer items-center justify-start px-4 py-2 text-sm text-gray-700 hover:bg-red-100 focus:bg-red-100 focus:outline-none dark:text-gray-200 dark:hover:bg-red-600 dark:hover:text-white dark:focus:bg-red-600 dark:focus:text-white',
+//         icon: 'mr-2 h-4 w-4',
+//       },
+//       style: {
+//         dark: 'bg-red-900 text-white dark:bg-red-700',
+//         light: 'border border-gray-200 bg-white text-gray-900',
+//         auto: 'border border-gray-200 bg-white text-gray-900 dark:border-none dark:bg-red-700 dark:text-white',
+//       },
+//       target: 'w-full',
+//     },
+//     inlineWrapper: 'flex items-center',
+//   },
+// }
 
 export const Filtro = (props: any) => {
   const { globalState, globalDispatch } = useGlobalContext()
@@ -252,6 +254,8 @@ export const Filtro = (props: any) => {
     getVeiculos,
   ])
 
+  console.log(listaChassi)
+
   const {
     dataInicial,
     setDataInicial,
@@ -279,7 +283,6 @@ export const Filtro = (props: any) => {
             onChange={(event) => setDataInicial(event.target.value)}
           />
         </div>
-
         <div className="mb-5">
           <label
             htmlFor="dt-final"
@@ -298,6 +301,38 @@ export const Filtro = (props: any) => {
         </div>
 
         <div className="mb-5">
+          <label
+            htmlFor="custom-multiselect"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Carros
+          </label>
+          <SearchableSelect
+            options={[
+              ...listaVeiculos.map((evento: any) => ({
+                label: evento.description,
+                value: evento.id,
+              })),
+            ]}
+            value={listaVeiculos
+              .filter((evento: any) => evento.enable)
+              .map((evento: any) => evento.id)}
+            onChange={(valoreselecionado: any) => {
+              globalDispatch({
+                type: 'SET_DATA',
+                payload: {
+                  listaVeiculos: listaVeiculos.map((item: any) => {
+                    item.enable = valoreselecionado.includes(item.id)
+                    return item
+                  }),
+                },
+              })
+            }}
+            placeholder="Nenhum Carro Selecionado"
+          />
+        </div>
+
+        {/* <div className="mb-5">
           <label
             htmlFor="carros"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -336,9 +371,43 @@ export const Filtro = (props: any) => {
               ))}
             </Dropdown>
           </Flowbite>
-        </div>
+        </div> */}
 
         <div className="mb-5">
+          <label
+            htmlFor="custom-multiselect"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Excluir Carros
+          </label>
+          <SearchableSelect
+            options={[
+              ...listaVeiculos.map((evento: any) => ({
+                label: evento.description,
+                value: evento.id,
+              })),
+            ]}
+            value={listaVeiculos
+              .filter((evento: any) => evento.exclude)
+              .map((evento: any) => evento.id)}
+            onChange={(valoreselecionado: any) => {
+              globalDispatch({
+                type: 'SET_DATA',
+                payload: {
+                  listaVeiculos: listaVeiculos.map((item: any) => {
+                    item.exclude = !!valoreselecionado.includes(item.id)
+
+                    // item.enable = valoreselecionado.includes(item.id)
+                    return item
+                  }),
+                },
+              })
+            }}
+            placeholder="Nenhum Carro Excluido"
+          />
+        </div>
+
+        {/* <div className="mb-5">
           <label
             htmlFor="excluir-carros"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -381,9 +450,41 @@ export const Filtro = (props: any) => {
               ))}
             </Dropdown>
           </Flowbite>
-        </div>
+        </div> */}
 
         <div className="mb-5">
+          <label
+            htmlFor="custom-multiselect"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Linhas
+          </label>
+          <SearchableSelect
+            options={[
+              ...listaLinhas.map((evento: any) => ({
+                label: evento.nome_linha,
+                value: evento.id,
+              })),
+            ]}
+            value={listaLinhas
+              .filter((evento: any) => evento.enable)
+              .map((evento: any) => evento.id)}
+            onChange={(valoreselecionado: any) => {
+              globalDispatch({
+                type: 'SET_DATA',
+                payload: {
+                  listaLinhas: listaLinhas.map((item: any) => {
+                    item.enable = valoreselecionado.includes(item.id)
+                    return item
+                  }),
+                },
+              })
+            }}
+            placeholder="Nenhuma Linha Selecionado"
+          />
+        </div>
+
+        {/* <div className="mb-5">
           <label
             htmlFor="linhas"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -422,9 +523,41 @@ export const Filtro = (props: any) => {
               ))}
             </Dropdown>
           </Flowbite>
-        </div>
+        </div> */}
 
         <div className="mb-5">
+          <label
+            htmlFor="custom-multiselect"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Motoristas
+          </label>
+          <SearchableSelect
+            options={[
+              ...listaMotoristas.map((evento: any) => ({
+                label: evento.name,
+                value: evento.id,
+              })),
+            ]}
+            value={listaMotoristas
+              .filter((evento: any) => evento.enable)
+              .map((evento: any) => evento.id)}
+            onChange={(valoreselecionado: any) => {
+              globalDispatch({
+                type: 'SET_DATA',
+                payload: {
+                  listaMotoristas: listaMotoristas.map((item: any) => {
+                    item.enable = valoreselecionado.includes(item.id)
+                    return item
+                  }),
+                },
+              })
+            }}
+            placeholder="Nenhum Motoristas Selecionado"
+          />
+        </div>
+
+        {/* <div className="mb-5">
           <label
             htmlFor="colaboradores"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -465,9 +598,41 @@ export const Filtro = (props: any) => {
               ))}
             </Dropdown>
           </Flowbite>
-        </div>
+        </div> */}
 
         <div className="mb-5">
+          <label
+            htmlFor="custom-multiselect"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Chassis
+          </label>
+          <SearchableSelect
+            options={[
+              ...listaChassi.map((evento: any) => ({
+                label: evento.numero_chassi,
+                value: evento.id,
+              })),
+            ]}
+            value={listaChassi
+              .filter((evento: any) => evento.enable)
+              .map((evento: any) => evento.id)}
+            onChange={(valoreselecionado: any) => {
+              globalDispatch({
+                type: 'SET_DATA',
+                payload: {
+                  listaChassi: listaChassi.map((item: any) => {
+                    item.enable = valoreselecionado.includes(item.id)
+                    return item
+                  }),
+                },
+              })
+            }}
+            placeholder="Nenhum Chassis Selecionado"
+          />
+        </div>
+
+        {/* <div className="mb-5">
           <label
             htmlFor="chassis"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -506,9 +671,39 @@ export const Filtro = (props: any) => {
               ))}
             </Dropdown>
           </Flowbite>
-        </div>
-
+        </div> */}
         <div className="mb-5">
+          <label
+            htmlFor="custom-multiselect"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Eventos de Segurança
+          </label>
+          <SearchableSelect
+            options={[
+              ...eventosSeguranca.map((evento: any) => ({
+                label: evento.descricao_exibida,
+                value: evento.code,
+              })),
+            ]}
+            value={eventosSeguranca
+              .filter((evento: any) => evento.enable)
+              .map((evento: any) => evento.code)}
+            onChange={(valoreselecionado: any) => {
+              globalDispatch({
+                type: 'SET_DATA',
+                payload: {
+                  eventosSeguranca: eventosSeguranca.map((item: any) => {
+                    item.enable = valoreselecionado.includes(item.code)
+                    return item
+                  }),
+                },
+              })
+            }}
+            placeholder="Nenhum Eventos de Segurança Selecionado"
+          />
+        </div>
+        {/* <div className="mb-5">
           <label
             htmlFor="eventos-seguranca"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -553,9 +748,8 @@ export const Filtro = (props: any) => {
               ))}
             </Dropdown>
           </Flowbite>
-        </div>
-
-        <div className="mb-5">
+        </div> */}
+        {/* <div className="mb-5">
           <label
             htmlFor="eventos-consumo"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -598,6 +792,37 @@ export const Filtro = (props: any) => {
               ))}
             </Dropdown>
           </Flowbite>
+        </div> */}
+        <div className="mb-5">
+          <label
+            htmlFor="custom-multiselect"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Eventos de Consumo
+          </label>
+          <SearchableSelect
+            options={[
+              ...eventosConsumo.map((evento: any) => ({
+                label: evento.descricao_exibida,
+                value: evento.code,
+              })),
+            ]}
+            value={eventosConsumo
+              .filter((evento: any) => evento.enable)
+              .map((evento: any) => evento.code)}
+            onChange={(valoreselecionado: any) => {
+              globalDispatch({
+                type: 'SET_DATA',
+                payload: {
+                  eventosConsumo: eventosConsumo.map((item: any) => {
+                    item.enable = valoreselecionado.includes(item.code)
+                    return item
+                  }),
+                },
+              })
+            }}
+            placeholder="Nenhum Eventos de Consumo Selecionado"
+          />
         </div>
       </div>
       <div className="ml-2 mr-2 gap-x-4 flex-wrap grid grid-cols-1 lg:grid-cols-5">
