@@ -23,7 +23,7 @@ export const Resumo = ({
   return (
     <>
       {/* Para telas maiores 6 colunas de itens */}
-      <div className="hidden grid-cols-3 p-2 gap-4 lg:grid-cols-6 lg:grid w-full">
+      <div className="hidden grid-cols-3 p-2 gap-4 lg:grid-cols-6 lg:grid w-full bg-blue-50 rounded-lg mt-1 mb-1">
         <div className="flex flex-row items-center justify-between bg-white p-4 rounded-md gap-2">
           <div>
             <span className="text-start inline-block">
@@ -130,16 +130,16 @@ export const Resumo = ({
       </div>
 
       {/* Para telas menores 3 colunas de itens */}
-      <div className="grid grid-cols-3 p-2 gap-4 lg:grid-cols-6 lg:hidden">
+      <div className="grid grid-cols-3 p-2 gap-4 lg:grid-cols-6 lg:hidden bg-blue-50 rounded-lg mt-1 mb-1">
         <div className="flex flex-col items-center justify-between bg-white p-4 rounded-md gap-2">
           <div>
             <img
               src={img_qtd_veiculos}
               alt="Quantidade de veiculos"
-              className="w-[55px]"
+              className="w-[40px]"
             />
           </div>
-          <span className="text-center inline-block">
+          <span className="text-center inline-block text-sm">
             Quantidade de Veiculos
           </span>
           <div>
@@ -154,10 +154,10 @@ export const Resumo = ({
             <img
               src={img_km_rodado}
               alt="Quantidade de veiculos"
-              className="w-[55px]"
+              className="w-[40px]"
             />
           </div>
-          <span className="text-center inline-block">KMs Rodado</span>
+          <span className="text-center inline-block text-sm">KMs Rodado</span>
           <div>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-start">
               360
@@ -170,10 +170,12 @@ export const Resumo = ({
             <img
               src={img_litros_consumidos}
               alt="Quantidade de veiculos"
-              className="w-[55px]"
+              className="w-[40px]"
             />
           </div>
-          <span className="text-center inline-block">Litros Consumidos</span>
+          <span className="text-center inline-block text-sm">
+            Litros Consumidos
+          </span>
           <div>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-start">
               360
@@ -186,10 +188,10 @@ export const Resumo = ({
             <img
               src={img_meta}
               alt="Quantidade de veiculos"
-              className="w-[55px]"
+              className="w-[40px]"
             />
           </div>
-          <span className="text-center inline-block">Meta</span>
+          <span className="text-center inline-block text-sm">Meta</span>
           <div>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-start">
               360
@@ -202,10 +204,12 @@ export const Resumo = ({
             <img
               src={img_meta_atingida}
               alt="Quantidade de veiculos"
-              className="w-[55px]"
+              className="w-[40px]"
             />
           </div>
-          <span className="text-center inline-block">Média Atindida</span>
+          <span className="text-center inline-block text-sm">
+            Média Atindida
+          </span>
           <div>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-start">
               360
@@ -218,10 +222,10 @@ export const Resumo = ({
             <img
               src={img_potencial_melhoria}
               alt="Quantidade de veiculos"
-              className="w-[55px]"
+              className="w-[40px]"
             />
           </div>
-          <span className="text-center inline-block">
+          <span className="text-center inline-block text-sm">
             Potencial de Melhoria
           </span>
           <div>

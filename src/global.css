@@ -4,6 +4,10 @@
   --color-primary: #1C3FAA;
 }
 
+* {
+    --tw-ring-color: rgb(0 0 0 / 0) !important;
+}
+
 body {
   background-color: var(--color-primary);
 }
